@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NotesList from "./components/NotesList";
 import { nanoid } from "nanoid";
 
@@ -7,20 +7,32 @@ export default function App() {
     {
       id: nanoid(),
       text: "this is my first text",
-      date: "15/10",
+      date: "15/10/2021",
     },
 
     {
       id: nanoid(),
       text: "this is my new text",
-      date: "ok/10",
+      date: "18/10/2021",
     },
     {
       id: nanoid(),
       text: "this is my third text",
-      date: "15/10",
+      date: "15/10/2020",
     },
   ]);
+  //json parse: string into object from local storage
+  useEffect(() => {
+    const saveNotes = JSON.parse(localStorage.getItem("react-todo-app"));
+
+    if (saveNotes) {
+      setNotes(saveNotes);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("react-todo-app", JSON.stringify(notes));
+  }, [notes]);
 
   const addNote = (text) => {
     const date = new Date();
@@ -33,9 +45,19 @@ export default function App() {
     const newNotes = [...notes, newNote];
     setNotes(newNotes);
   };
+
+  const deleteNote = (id) => {
+    const newNotes = notes.filter((note) => note.id !== id);
+    setNotes(newNotes);
+  };
   return (
     <div className="container">
-      <NotesList notes={notes} handleAddNote={addNote} />
+      <h1>Todo App</h1>
+      <NotesList
+        notes={notes}
+        handleAddNote={addNote}
+        handleDeleteNote={deleteNote}
+      />
     </div>
   );
 }

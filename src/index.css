@@ -49,17 +49,22 @@ textarea:focus {
 }
 
 .note {
-  background-color: #fef68a;
+  background-color: #334257;
+  color: #a7bbc7;
   border-radius: 10px;
   padding: 1rem;
   min-height: 170px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  white-space: pre-wrap;
 }
 
 .note-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.delete-icon {
+  cursor: pointer;
 }
